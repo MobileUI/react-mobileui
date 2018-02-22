@@ -4,7 +4,7 @@ import './Base.css'
 const Base = (props) => {
   
   return (
-    <div {...attributes} className={classes}></div>
+    <div>oii</div>
   )
 
 }

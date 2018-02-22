@@ -71,7 +71,8 @@ var config = [{
   resolve: {
     extensions: ['', '.js', '.json'],
     alias: {
-      'react-mobileui': path.resolve('./src')
+        'bootstrap-css': path.join(__dirname,'node_modules/bootstrap/dist/css/bootstrap.css'),
+        'react-mobileui': path.resolve('./src')
     }
   }
 }];
