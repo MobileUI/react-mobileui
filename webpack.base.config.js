@@ -1,18 +1,19 @@
-'use strict';
-const path = require('path');
-const webpack = require('webpack');
+'use strict'
+const path = require('path')
+const webpack = require('webpack')
 
-const libraryName = 'react-mobileui';
+const libraryName = 'react-mobileui'
 
 module.exports = function (env) {
-  let outputFile;
+  let outputFile
+
   const plugins = [
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env)
     }),
     new webpack.optimize.OccurenceOrderPlugin()
-  ];
+  ]
 
   if (env === 'production') {
     plugins.push(new webpack.optimize.UglifyJsPlugin(
@@ -23,10 +24,10 @@ module.exports = function (env) {
         },
         mangle: true
       }
-    ));
-    outputFile = libraryName.toLowerCase() + '.min.js';
+    ))
+    outputFile = libraryName.toLowerCase() + '.min.js'
   } else {
-    outputFile = libraryName.toLowerCase() + '.js';
+    outputFile = libraryName.toLowerCase() + '.js'
   }
 
   const config = {
@@ -72,6 +73,13 @@ module.exports = function (env) {
             'babel-loader?cacheDirectory'
           ]
         },
+        {
+          test: /\.css$/,
+          loaders: [
+            'style-loader?sourceMap',
+            'css-loader?modules&importLoaders=1'
+          ]
+        }
       ]
     },
     resolve: {
@@ -84,7 +92,7 @@ module.exports = function (env) {
       ]
     },
     plugins: plugins
-  };
+  }
 
-  return config;
-};
+  return config
+}
