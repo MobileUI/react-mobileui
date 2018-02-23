@@ -1,22 +1,22 @@
-var path = require('path');
-var webpack = require('webpack');
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-var env = process.env.WEBPACK_BUILD || 'development';
+const path = require('path')
+const webpack = require('webpack')
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
+const env = process.env.WEBPACK_BUILD || 'development'
 
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpackDevConfig = require('./webpack.base.config')('development');
-var webpackProdConfig = require('./webpack.base.config')('production');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpackDevConfig = require('./webpack.base.config')('development')
+const webpackProdConfig = require('./webpack.base.config')('production')
 
-var paths = [
+const paths = [
   '/',
   '/components/',
   '/components/base/',
   '/components/button/'
-];
+]
 
-var config = [{
+const config = [{
   devtool: 'source-map',
   devServer: {
     contentBase: './build',
@@ -45,41 +45,20 @@ var config = [{
     new webpack.optimize.OccurenceOrderPlugin(),
     new StaticSiteGeneratorPlugin('main', paths, {}),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("/assets/style.css")
+    new ExtractTextPlugin('/assets/style.css')
   ],
-  module: {
-    loaders: [
-      {
-        test: /\.json$/,
-        loaders: [
-          'json-loader?cacheDirectory'
-        ]
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loaders: [
-          'babel-loader?cacheDirectory'
-        ]
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-      },
-    ]
-  },
   resolve: {
     extensions: ['', '.js', '.json'],
     alias: {
-        'bootstrap-css': path.join(__dirname,'node_modules/bootstrap/dist/css/bootstrap.css'),
-        'react-mobileui': path.resolve('./src')
+      'bootstrap-css': path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
+      'react-mobileui': path.resolve('./src')
     }
   }
-}];
+}]
 
 if (env === 'development') {
-  config.push(webpackDevConfig);
-  config.push(webpackProdConfig);
+  config.push(webpackDevConfig)
+  config.push(webpackProdConfig)
 } else {
   config[0].plugins.push(new webpack.optimize.UglifyJsPlugin(
     {
@@ -89,7 +68,7 @@ if (env === 'development') {
       },
       mangle: true
     }
-  ));
+  ))
 }
 
-module.exports = config;
+module.exports = config
